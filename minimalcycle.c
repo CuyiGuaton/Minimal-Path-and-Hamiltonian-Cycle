@@ -61,9 +61,16 @@ void copy(){
 }
 
 void recursive(){
-  findcycle(0,0,0);
+  //findcycle(0,0,0);
+  //copy();
+  //cyclesIndex=0;
+  //findcycle(1,0,1);
+  for(int i= 0 ; i< n ; i++){
+    findcycle(i,0,i);
+    copy();
+    cyclesIndex=0;
+  }
   mostrar(cycles,n);
-  mostrar(graph2,n);
 
 }
 
@@ -77,16 +84,27 @@ int isInCyle(int vertex, int num){
 
 void findcycle(int row, int col, int vertex){
   if(col < n){
-    if(isInCyle(vertex, row)==0){
-      if(graph2[row][col] == 0){
-        findcycle(row,col+1,vertex);
-      }else{
-        graph2[row][col] = 0;
-        graph2[col][row] = 0;
-        cycles[vertex][cyclesIndex] = row;
-        cyclesIndex = cyclesIndex +1;
-        findcycle(col,0,vertex);
+        if(isInCyle(vertex, row)==0){
+            if(degreeVertex(row,graph2,n)<2){
+              //retrocede
+              cyclesIndex = cyclesIndex - 1;
+              graph2[cycles[vertex][cyclesIndex]][row]=1;
+              graph2[row][cycles[vertex][cyclesIndex]]=1;
+              findcycle(cycles[vertex][cyclesIndex], row+1,vertex);
+            }
+            else
+                if(graph2[row][col] == 0)
+                  findcycle(row,col+1,vertex);
+                else{
+                  graph2[row][col] = 0;
+                  graph2[col][row] = 0;
+                  cycles[vertex][cyclesIndex] = row;
+                  cyclesIndex = cyclesIndex +1;
+                  findcycle(col,0,vertex);
+                }
+        }else{
+          cycles[vertex][cyclesIndex] = row;
+          cyclesIndex = cyclesIndex +1;
       }
     }
   }
-}
