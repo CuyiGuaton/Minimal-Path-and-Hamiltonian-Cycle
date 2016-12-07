@@ -84,7 +84,6 @@ int isInCyle(int vertex, int num){
 
 void findcycle(int row, int col, int vertex){
   if(col < n){
-        if(isInCyle(vertex, row)==0){
             if(degreeVertex(row,graph2,n)<2){
               //retrocede
               cyclesIndex = cyclesIndex - 1;
@@ -107,4 +106,4 @@ void findcycle(int row, int col, int vertex){
           cyclesIndex = cyclesIndex +1;
       }
     }
-  }
+  
