@@ -73,5 +73,4 @@ int generator(int **matrix, int n,float p) {
       if( rand()%100 + 1 < p*100 )
         incluir(a,b,matrix,n);
   }
-  mostrar(matrix,n);
 }
