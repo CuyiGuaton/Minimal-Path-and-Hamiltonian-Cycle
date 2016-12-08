@@ -4,8 +4,9 @@
 #include "functions.c"
 
 
+//pico
 void Conex(int a, int b, int **matrix, int order);
-
+int suma_covex( int *suma , int n );
 
 int main(int argc, char const *argv[]) {
 
@@ -20,6 +21,7 @@ int main(int argc, char const *argv[]) {
   for (int i=0;i<n;i++)
     matrix[i] = (int *) malloc (n*sizeof(int *));
 
+  printf("\n");
   generator(matrix,n,p);
 
   Conex( a, b, matrix, n);
@@ -31,77 +33,142 @@ int main(int argc, char const *argv[]) {
   return 0;
 }
 
+
+int suma_covex( int *suma, int n )
+{
+	int convexo=1,column;printf(" \n " );
+	for ( column = 0; column < n; column++ )
+	{	
+		if ( suma[column]!= 1 ){ convexo=0; }
+	}
+
+	return convexo;
+}
+
 void Conex(int a, int b, int **matrix, int n)
-{	int row=0, column, *suma, *aux_row, *aux_row_repetir, cont=0, cont_def=0, i, j=0;
+{	int row=0, column, *suma, *aux_row, *ciclo, cont=0, cont_min=0, i, j=0, u, h, count, count_min=0;
 
   	suma = (int *) malloc (n*sizeof(int));
 	aux_row = (int *) malloc (n*sizeof(int));
-	aux_row_repetir = (int *) malloc (n*sizeof(int));
+	ciclo = (int *) malloc (n*sizeof(int));
 
 	// Llenando Suma
 	for ( column=0; column < n ; column++ )
 	{
-		suma[column]=0;
-		aux_row[column]=0;
-		aux_row_repetir[column]=0;
+		suma[column]=0;	
+		aux_row[column]=88;	
+		ciclo[column]=88;
 	}
-
+	
 	for ( column = 0; column < n; column++ )
-	{
+	{	
+//----------------------------------------------------------------------------------------------------------------------//
 		if ( matrix[row][column]==1 && row!=column )
-		{
+		{			
 			suma[column] = 1;	suma[row] = 1;
-			printf("j=");	printf("%d	", j );
-			printf("column[");	printf("%d", column ); printf("]="); printf("%d	", suma[column] );
-			// Asignacion de filas
 
-			// Ver si la fila esta en espera
-			for ( i=0 ; i <= cont ; i++ )
+			// Asignacion de filas 
+
+			// Ver si la fila esta en espera/proseso
+			for ( i=0 ; i < cont ; i++ )
 			{
-				if ( aux_row[i]==column ){ j=1;	}
+				if ( aux_row[i]==column ){ j=1; }
 			}
-			// Ver si una fila ya fue usada.
-			for ( i=0 ; i < cont_def ; i++ )
-			{
-				if ( aux_row_repetir[i]==column ){ j=1;	}
-			}
+
 			if ( j==0 )
-			{
+			{	
 				// Auxiliar
-				aux_row[cont] = row;		cont++;	// Guarda los cambios de fila
-				// Guardado
-				aux_row_repetir[cont_def] = row;	cont_def++;	// Guarda los cambios de fila
+				aux_row[cont] = row;			cont++;		// Guarda los cambios de fila
+
 				// Cambio de fila
-				printf("column=");	printf("%d	", column ); printf("row="); printf("%d	", row );
-				row = column;
-				printf("	/	");
+				row = column;	
+
 				column = 0;
-				printf("column=");	printf("%d	", column ); printf("row="); printf("%d	", row );
+			}
+		
+			// Ver ciclo minimo
+			if ( cont > 2 )
+			{
+				for ( i=0 ; i <= (cont-2) ; i++ )
+				{
+					if ( aux_row[i]==column )
+					{
+						count= cont - i;
+
+						if( count_min==0 || count_min > count ){ count_min=count; }
+						if( count_min==count )
+						{	
+							u=0;
+							for ( h=i ; h < cont ; h++ )
+							{
+								ciclo[u]=aux_row[h]; u++;
+								if( h==cont-1 ){ ciclo[u]=row; u++; ciclo[u]=column;}
+							}
+						}
+					}
+				}
 			}
 
 			j=0;
 
+			// Ciclo Hamilton
+			if ( row==(n-1) && suma_covex( suma , n )==1 )
+			{
+				printf("Ciclo Hamiltoniano:  ");
+				printf(" \n\n  ");
+				for ( column = 0; column < n; column++ )
+				{	
+					if ( column!=(n-1) )
+					{ 
+						printf("%d ", aux_row[column] );	printf(" --> " );  
+					}
+					else
+					{
+						printf("%d ", row );	printf(" --> " );
+
+						if ( matrix[(n-1)][0]==1 )
+						{ 
+							printf("%d ", 0 );
+							printf("\n\n Tiene ciclo Hamilton\n" );
+						}
+						else
+						{ 
+							printf(" X "); 
+							printf("\n\n No tiene ciclo Hamilton\n" );
+						}
+					}
+				}
+			}
 		}
 
 		if ( column == n-1 && cont!= 0 )
 		{
 			column = row;
-			row = aux_row[cont];	cont--;
+			row = aux_row[cont];	cont--;	
 			// Para evitar ciclo infinito
 			if ( matrix[row][column]==1 ){ j=1; }
 		}
 	}
 
-	j=0;printf("////");
-	for ( column = 0; column < n; column++ )
+
+	if ( suma_covex( suma , n )==1 ){ printf("Es Conexa\n\n"); }else{ printf("No es Conexa\n\n"); printf("\n\n"); }
+
+	printf (" Ciclo Minimo:\n \n ");
+	for ( column = 0; column < count_min+2; column++ )
 	{
-		if ( suma[column]!= 1 ){ j=1; }
-		printf("column[");	printf("%d", column ); printf("]="); printf("%d	", suma[column] );
+		if( column < count_min+1 ){ printf(" %d ", ciclo[column] );	printf(" --> " );  }
+		if( column==count_min+1 ){	printf(" %d ", ciclo[column] );	}
 	}
+
+	printf ("\n \n ");
 
 	free( suma );
 	free( aux_row );
-	free( aux_row_repetir );
-
-	if ( j==0 ){ printf("Es Conexa"); }else{ printf("No es Conexa"); printf("\n\n"); }
+	free( ciclo );
 }
+
+
+
+
+
+
