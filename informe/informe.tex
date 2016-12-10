@@ -104,6 +104,20 @@ Recuperado el #6
 
 \section{Explicación algoritmo}
 
+El algoritmo utiliza una matriz de nxn para representar el grafo, donde "n" es la cantidad de vértices y "p" de aristas.
+\\\\
+Para saber si existe un ciclo Hamilton en el grafo primero se recorre desde un vértice "0" y se va avanzando por todos los vértices que compartan aristas ( sin repetir \\vértices ), si al terminar el recorrido se pudo recorrer todos los vértices del grafo ( sin repetirse ) y regresar al primer vértice: se afirma que es ciclo hamilton y se muestra en pantalla dicho ciclo. 
+\\\\
+En caso de llegar a un vértice que no sea el inicial y no tenga mas aristas que lleven a nuevos vértices  que recorrer: retrocede al vértice anterior y busca otro camino posible, si nuevamente no encuentra, vuelve a retroceder y buscar otro vértice distinto nuevamente, y así susesivamente.
+\\\\
+Si al termina el recorrido y no se encuentra ningún ciclo hamilton, se muestra en pantalla cual fue el último movimiento realizado y hasta que vértice llegó, mostrando al final una "X" donde NO hay mas vértices nuevos que avanzar.
+\\\\
+Todo esto representando el grafo en una matriz donde las filas y columnas son los vértices, y sus posiciones representan si están unidas por una arista o no, en la cual "0" afirma no tener aristas en común y "1" si.
+\\\\
+Para el ciclo mínimo se recorre el grafo casi de igual manera, nada mas que si puede repetir un vértice y cerrar ahí un ciclo, éste se guarda y se compara en caso de que aparezcan otros ciclos, el ciclo de menor cantidad de vértices ( mínimo 3 vértices ) se muestra en pantalla. 
+
+\newpage
+
 \section{Formulación experimentos}
 
 \section{Información de Hardware y Software}
