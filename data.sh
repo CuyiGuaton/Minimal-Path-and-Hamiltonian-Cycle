@@ -6,7 +6,8 @@
 #n=$1 $2=num iteración
 function nVaria {
   #elimina todo el contenido del archivo a guardar si es que existe.
-  num=$(awk 'BEGIN{for(i=0.86;i<=1.01;i+=0.01)print i}')
+  echo -n "" > informe/plots/plot$2n$1.txt
+  num=$(awk 'BEGIN{for(i=0;i<=1.01;i+=0.01)print i}')
 
   for i in $num
   do
@@ -31,6 +32,15 @@ EOFMarker
 
 echo "Se están creando las gráficas, por favor espere"
 #Crea las gráficas para los 5 metodos
+
+n=100
+nVaria $n 1
+
+n=500
+nVaria $n 2
+
+n=1000
+nVaria $n 3
 
 n=10000
 nVaria $n 4
