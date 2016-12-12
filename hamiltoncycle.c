@@ -26,7 +26,6 @@ int main(int argc, char const *argv[]) {
 
         float t;
         clock_t tStart;
-        printf("p\t t\n");
 
         tStart = clock();
         Conex( a, b, matrix, n);
