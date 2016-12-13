@@ -100,7 +100,13 @@ Recuperado el #6
 
 
 \newpage
-\section*{Introducción}
+
+\tableofcontents
+
+\newpage
+\section{Introducción}
+
+Este informe tratara sobre el analisis de tres algoritmos a la vez. El algoritmo de busca de ciclo minimo, que buscara cuál es el ciclo que contiene menos vertices en un grafo. El algoritmo de ver si un grafo un convexo y por último la busqueda del camino hamiltoniano, este trata de buscar un camino dentro del grafo que pase por todos los vertices y se devuelva por el vertice de inicio.
 
 \section{Explicación algoritmo}
 
@@ -119,6 +125,13 @@ Para el ciclo mínimo se recorre el grafo casi de igual manera, nada mas que si 
 \newpage
 
 \section{Formulación experimentos}
+
+Para analizar los algoritmos se probo con con 4 valores distintos de n, n= 100, 500, 1000, 10000, en los que se variaba los valores de p.
+
+El rango de los valores de p iba desde 0 hasta 1, con intervalos de 0.01, por lo que cada n se probaba con 100 valores de p distintos, la tabla de resultados se puede ver en la capeta $informe/plots/$, donde la primera columna es el valor p y la segunda el tiempo
+
+Como los tres algoritmos dependendian del otro para funcionar se decicio hacer las tablas y los graficos del ficionamientos de los tres algoritmos juntos.
+\newpage
 
 \section{Información de Hardware y Software}
 
@@ -153,12 +166,36 @@ Para el ciclo mínimo se recorre el grafo casi de igual manera, nada mas que si 
 \item Procesador: Intel Core i7-6500U CPU  2.50GHz x 4 
 \item Video: Intel HD Graphics 520 (Skylake GT2) 
 \end{itemize}
-
+\newpage
 
 
 
 \section{Curvas de desempeño de resultados}
 
+\subsection{n = 100}
+\begin{center}
+\includegraphics[scale=.80]{plots/plot1n100.png} 
+\end{center}
+\newpage
+\subsection{n = 500}
+\begin{center}
+\includegraphics[scale=.80]{plots/plot2n500.png} 
+\end{center}
+\newpage
+\subsection{n = 1000}
+\begin{center}
+\includegraphics[scale=.80]{plots/plot3n1000.png} 
+\end{center}
+\newpage
+\subsection{n = 10000}
+\begin{center}
+\includegraphics[scale=.80]{plots/plot4n10000.png} 
+\end{center}
+\newpage
 \section{Conclusiones}
+
+Se puede apreciar que ha mayor valor p mayor coste computacional tendrá el algoritmo, pero en contraste los tres primeros gráficos con n = 100, 500 y 1000 se mantuvieron similares en el tiempo, aun así con el último gráfico el tiempo crecio, por lo que a mayor valor de n también es mayor el tiempo de ejecución.
+
+Por lo tanto se puede concluir que a mayor cantidad de vértices y aristas tenga un grafo, mayor será la cantidad de tiempo que se demorara el algoritmo en encontrar un ciclo minimo y un ciclo hamiltoniano.
 
 \end{document}
